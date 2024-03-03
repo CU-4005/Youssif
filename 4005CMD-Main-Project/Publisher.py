@@ -17,13 +17,6 @@ def on_connect(client, userdata, flags, rc):
     else:
         print(f"Connection failed with result code {rc}")
 
-
-#on_publish callback function...
-def on_publish(client, userdata, mid):
-    #Prints message id
-    print(f"Message published with mid: {mid}")
-
-
 #on_disconnect callback function...
 def on_disconnect(client, userdata, rc):
     #Checks return code for unsuccessful connection --> Disconnected
@@ -32,6 +25,10 @@ def on_disconnect(client, userdata, rc):
     else:
         print("Disconnected from the broker")
 
+#on_publish callback function...
+def on_publish(client, userdata, mid):
+    #Prints message id
+    print(f"Message published with mid: {mid}")
 
 #on_log callback function...
 def on_log(client, userdata, level, buf):
@@ -55,17 +52,19 @@ mqttBroker = "mqtt.eclipseprojects.io"
 try:
     client.connect(mqttBroker)
 except Exception as e:
-    print(f"Connection failed - The error was: {e}")
+    print(f"Connection failed - The error was: {e} \n disconnecting...")
+    client.disconnect()
 
 client.loop_start()
 
+#Boat prototype class
 class boatPrototype:
     def __init__(self, prototypeNo, weight):
         self.prototypeNo = prototypeNo
         self.weight = weight
 
     def departing(self, fuelTankVolume, frequencySensor, accelerationSensor, amplitudeSensor):
-        print("Boat has started moving...")
+        print("Boat is moving...")
 
         #Publishing to topic "Frequency"
         # Quality of service = 2
