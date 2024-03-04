@@ -57,6 +57,7 @@ except Exception as e:
 
 client.loop_start()
 
+
 #Boat prototype class
 class boatPrototype:
     def __init__(self, prototypeNo, weight):
@@ -106,12 +107,61 @@ boat1 = boatPrototype(1, 40000000)
 
 #While loop to publish random values
 while True:
-    # Generating random values
-    randFrequency = uniform(1.0, 10.0)
-    randFuel = uniform(20.0, 50.0)
-    randAmplitude = uniform(1.0, 10.0)
-    randAcceleration = uniform(50.0, 100.0)
+    #Asking for which sensors you would like to get data from
+    choice = input("Would you like to turn off any sensors?\n")
+    choice = choice.lower()
+    if choice == "yes":
+        print("1)Frequency \n 2)Amplitude \n 3)Acceleration \n4)Fuel")
+        sensorToTurnOff = int(input("What sensor would you like to turn off?"))
+        if sensorToTurnOff == 1:
+            randFuel = uniform(20.0, 50.0)
+            randAmplitude = uniform(1.0, 10.0)
+            randAcceleration = uniform(50.0, 100.0)
 
-    # Calling the departing method with random values
-    boat1.departing(randFuel, randFrequency, randAcceleration, randAmplitude)
+            # Calling the departing method with random values
+            boat1.departing(randFuel, "off", randAcceleration, randAmplitude)
+
+        elif sensorToTurnOff == 2:
+            # Generating random values
+            randFrequency = uniform(1.0, 10.0)
+            randFuel = uniform(20.0, 50.0)
+            randAcceleration = uniform(50.0, 100.0)
+
+            # Calling the departing method with random values
+            boat1.departing(randFuel, randFrequency, randAcceleration, "off")
+
+        elif sensorToTurnOff == 3:
+             # Generating random values
+            randFrequency = uniform(1.0, 10.0)
+            randFuel = uniform(20.0, 50.0)
+            randAmplitude = uniform(1.0, 10.0)
+
+            # Calling the departing method with random values
+            boat1.departing(randFuel, randFrequency, "off", randAmplitude)
+
+        elif sensorToTurnOff == 4:
+            # Generating random values
+            randFrequency = uniform(1.0, 10.0)
+            randAmplitude = uniform(1.0, 10.0)
+            randAcceleration = uniform(50.0, 100.0)
+
+            # Calling the departing method with random values
+            boat1.departing("off", randFrequency, randAcceleration, randAmplitude)
+
+        else:
+            print("Sensor non existent")
+            False
     
+    elif choice == "no":
+        # Generating random values
+        randFrequency = uniform(1.0, 10.0)
+        randFuel = uniform(20.0, 50.0)
+        randAmplitude = uniform(1.0, 10.0)
+        randAcceleration = uniform(50.0, 100.0)
+
+        # Calling the departing method with random values
+        boat1.departing(randFuel, randFrequency, randAcceleration, randAmplitude)
+    
+    else:
+        print("You can either answer yes or no")
+        False
